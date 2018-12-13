@@ -6,7 +6,6 @@ body {
 
 .header-row{
     padding: 50px;
-    /* font-family: Marvel; */
 }
 
 .header-logo{
@@ -16,6 +15,7 @@ body {
 .card{
     border-color: white;
     background-color: #003366;
+    margin-bottom: 15px;
 }
 
 .card-header{
