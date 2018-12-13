@@ -26,13 +26,23 @@ var displayDiv = document.getElementById("display");
 var remainingDiv = document.getElementById("guesses");
 var usedDiv = document.getElementById("used");
 var winDiv = document.getElementById("win-counter");
+var resultsDiv = document.getElementById("results")
+
+
+
+function updateWins(){
+    winDiv.innerHTML = ""
+
+    var winTxt = document.createElement("span");
+    winTxt.textContent = wins;
+    winDiv.appendChild(winTxt);
+}
 
 function updateDisplay() {
 
     displayDiv.innerHTML = "";
     remainingDiv.innerHTML = "";
     usedDiv.innerHTML = "";
-    winDiv.innerHTML = "";
 
     for(var i = 0; i < dispArray.length; i++) {
         var holder = document.createElement("span");
@@ -42,18 +52,13 @@ function updateDisplay() {
 
     for(var j = 0; j < lettersGuessed.length; j++){
         var holder = document.createElement("span");
-        holder.textContent = lettersGuessed[i];
+        holder.textContent = lettersGuessed[j] + " ";
         usedDiv.appendChild(holder);
     }
 
     var remGuessTxt = document.createElement("span");
     remGuessTxt.textContent = remainingGuesses;
     remainingDiv.appendChild(remGuessTxt);
-
-    var winTxt = document.createElement("span");
-    winTxt.textContent = wins;
-    winDiv.appendChild(winTxt);
-
 }
 
 function updateDispArr(key){
@@ -72,9 +77,14 @@ function updateDispArr(key){
 
 function newWord() {
     
+    remainingGuesses = 15;
+    dispArray = [];
+    currArray = [];
+    lettersGuessed = [];
+    resultsDiv.innerHTML = "";
+
     currentWord = wordBank[Math.floor(Math.random()* wordBank.length)];
     console.log(currentWord);
-
 
     for(var i =0; i < currentWord.length; i++){
         dispArray.push("_");
@@ -86,22 +96,38 @@ function newWord() {
     updateDisplay();
 }
 
-
-function checkWin(){
-    if (compareArr(currArray, dispArray)){
-        wins++;
-        newWord();
+function checkWin(arr1, arr2){
+    if(currArray.length !== dispArray.length){
+        return false;
+    } else {
+        for(i = 0; i < currArray.length; i++){
+            if(currArray[i] !== dispArray[i]){
+                return false;
+            }
+        }
     }
+
+    return true;
 }
 
+function sendFailMessage(){
+
+    var message = document.createElement("h3");
+    message.textContent = "You ran out of guesses! Press any key to try again!"
+    resultsDiv.appendChild(message);
+}
+
+function sendWinMessage(){
+    var message = document.createElement("h3");
+    message.textContent = "You win! Press any key to play again!"
+    resultsDiv.appendChild(message);
+}
 
 function checkGuess(key) {
     if(currArray.includes(key)){
         updateDispArr(key);
         console.log(dispArray);
         console.log(currArray);
-        console.log(dispArray === currArray);
-        checkWin();
     } else {
         if(!lettersGuessed.includes(key)){
             lettersGuessed.push(key);
@@ -110,7 +136,8 @@ function checkGuess(key) {
     }
 
     if(remainingGuesses <= 0){
-        newWord();
+        sendFailMessage();
+        running = false;
     }
 
     updateDisplay();
@@ -125,5 +152,12 @@ document.addEventListener("keypress", function(e) {
         newWord()
     } else {
         checkGuess(pressedKey);
+    }
+
+    if(checkWin()){
+        wins++;
+        sendWinMessage();
+        updateWins();
+        running = false;
     }
 })
