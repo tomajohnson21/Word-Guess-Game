@@ -2,13 +2,60 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hangman</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1>Avengers Word Guess</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="card win-card">
+
+                    <h5 class="card-header">Wins</h5>
+
+                    <h5 class="card-title" id="win-counter"></h5>
+                </div>
+
+                <div class="card display-card">
+
+                    <h5 class="card-header">Current Word</h5>
+
+                    <h5 class="card-title" id="display"></h5>
+                </div>
+                
+                <div class="card remaining-card">
+
+                    <h5 class="card-header">Guesses Remaining</h5>
+
+                    <h5 class="card-title" id="guesses"></h5>
+                </div>
+
+                <div class="card guessed-card">
+
+                    <h5 class="card-header">Letters Guessed</h5>
+
+                    <h5 class="card-title" id="used"></h5>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <div>
+
+                    <img src="assets/images/avengerslogo.jpg" alt="Avengers Logo">
+                </div>
+            </div>
+        </div>
+    </div>        
+        <script src="assets/javascript/game.js"></script>
 </body>
 </html>
